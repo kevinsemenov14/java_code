@@ -1,0 +1,139 @@
+
+import static java.lang.Math.PI;
+import static java.lang.Math.tan;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Scanner;
+
+/**
+ * @author kevin
+ */
+public class ContestGO {
+
+    public static void main(String[] args) {
+
+        Scanner in = new Scanner(System.in);
+        ArrayList<Shape> shapes = new ArrayList<>();
+        String next;
+        Shape newShape;
+        while(in.hasNext()) {
+            // Increment the position of the scanner
+            next = in.next();
+
+            // Create the shape & add it to the set
+            switch(next) {
+                case "Circle"  : shapes.add( new Circle(in) ); break;
+                case "Ellipse" : shapes.add(new Ellipse(in) ); break;
+                case "Hexagon" : shapes.add(new Hexagon(in) ); break;
+                default        : System.out.println("ERROR");
+            }
+        }
+
+        // Sort the list
+        Collections.sort(shapes);
+
+        // Output the list
+        for(Shape s: shapes) {
+            System.out.println(s);
+        }
+    }
+}//-----------------------------------------------------------------------------
+
+abstract class Shape implements Comparable<Shape> {
+    // ALL SHAPES
+    String  shapeName;
+    String  fillColor;
+    boolean isFilled;
+    Date    birthDate;
+    Double  area;
+
+    public String toString() {
+        String out = String.format("%s\t%,.2f\t%s\t%b\t%s",
+                            shapeName,
+                            area,
+                            fillColor,
+                            isFilled,
+                            birthDate.toString());
+        return out;
+    }
+    public abstract double calcArea();
+
+    @Override
+    public int compareTo(Shape other) {
+        int result = area.compareTo(other.area);
+        if(result == 0) {
+            result = fillColor.compareTo(other.fillColor);
+        }
+        return result;
+    }
+
+    public void setAttributes(Scanner scanner) {
+        String next;
+        // Fill color
+        fillColor = scanner.next();
+
+        // isFilled
+        next = scanner.next();
+        isFilled = next.equals("True") || next.equals("true");
+
+        // Birth date
+        next = scanner.next();
+        birthDate = new Date();
+        birthDate.setTime(Long.parseLong(next));
+    }
+}//-----------------------------------------------------------------------------
+
+class Circle extends Shape {
+    double radius;
+
+    public Circle(Scanner scanner) {
+        shapeName   = "Circle";
+        String next = scanner.next();
+        radius      = Double.parseDouble(next);
+        area        = calcArea();
+        setAttributes(scanner);
+    }
+
+    @Override
+    public double calcArea() {
+        return (PI * radius * radius);
+    }
+}//-----------------------------------------------------------------------------
+
+class Ellipse extends Shape {
+    double minorRadius;
+    double majorRadius;
+
+    public Ellipse(Scanner scanner) {
+        shapeName   = "Ellipse";
+        String next = scanner.next();
+        minorRadius = Double.parseDouble(next);
+        next        = scanner.next();
+        majorRadius = Double.parseDouble(next);
+        area        = calcArea();
+        setAttributes(scanner);
+    }
+
+    @Override
+    public double calcArea() {
+        return PI * minorRadius * majorRadius;
+    }
+}//-----------------------------------------------------------------------------
+
+class Hexagon extends Shape {
+    double sideLength;
+
+    public Hexagon(Scanner scanner) {
+        shapeName   = "Hexagon";
+        String next = scanner.next();
+        sideLength  = Double.parseDouble(next);
+        area        = calcArea();
+        setAttributes(scanner);
+    }
+
+    @Override
+    public double calcArea() {
+        return (6 * (sideLength * sideLength)) / (4 * tan(PI/6));
+    }
+}//-----------------------------------------------------------------------------

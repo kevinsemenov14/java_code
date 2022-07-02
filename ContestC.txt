@@ -1,0 +1,72 @@
+
+import java.util.Scanner;
+
+public class ContestC {
+
+    public static void main(String[] args) {
+
+        Scanner in = new Scanner(System.in);
+        int charCounts[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+
+        // Read in the string
+        while(in.hasNext()) {
+
+            String input = in.next();
+
+			//System.out.println(input);
+			input = input.toUpperCase();
+
+            // Parse the string for each character
+            int i = 0;
+            boolean done = false;
+            while(i < input.length() && !done) {
+
+                if(input.charAt(i) == '-' && input.charAt(i+1) == '1') {
+
+                    // Output the result
+                    for(int j = 0; j < charCounts.length; j++) {
+                        System.out.print(charCounts[j] +  (j == charCounts.length-1 ? "": " "));
+                    }
+                    System.out.println();
+                    i++;
+                    done = true;
+
+                } else {
+
+                    // Increment the character count
+                    char c = input.charAt(i);
+                    switch(c) {
+                        case 'A': charCounts[0]++; break;
+                        case 'B': charCounts[1]++; break;
+                        case 'C': charCounts[2]++; break;
+                        case 'D': charCounts[3]++; break;
+                        case 'E': charCounts[4]++; break;
+                        case 'F': charCounts[5]++; break;
+                        case 'G': charCounts[6]++; break;
+                        case 'H': charCounts[7]++; break;
+                        case 'I': charCounts[8]++; break;
+                        case 'J': charCounts[9]++; break;
+                        case 'K': charCounts[10]++; break;
+                        case 'L': charCounts[11]++; break;
+                        case 'M': charCounts[12]++; break;
+                        case 'N': charCounts[13]++; break;
+                        case 'O': charCounts[14]++; break;
+                        case 'P': charCounts[15]++; break;
+                        case 'Q': charCounts[16]++; break;
+                        case 'R': charCounts[17]++; break;
+                        case 'S': charCounts[18]++; break;
+                        case 'T': charCounts[19]++; break;
+                        case 'U': charCounts[20]++; break;
+                        case 'V': charCounts[21]++; break;
+                        case 'W': charCounts[22]++; break;
+                        case 'X': charCounts[23]++; break;
+                        case 'Y': charCounts[24]++; break;
+                        case 'Z': charCounts[25]++; break;
+                        default :
+                    }
+                }
+                i++;
+            }
+        }
+    }
+}
